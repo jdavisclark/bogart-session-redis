@@ -1,0 +1,19 @@
+{
+    "name": "bogart-session-redis",
+    "description": "redis providers for the bogart session middleware",
+    "version": "0.0.1",
+    "keywords": ["bogart", "session", "redis", "jsgi"],
+    "author": "Davis Clark",
+    "email": "davis.clark@whiteboard-it.com",
+    "main": "./lib/index",
+    "directories": { "lib": "./lib" },
+    "bugs": {
+      "url": "https://github.com/jdc0589/bogart-session-redis/issues",
+      "email": "jdc0589@gmail.com"
+    },
+    "dependencies": {
+      "hiredis": "=0.1.12",
+      "redis": "=0.6.7",
+      "q" : "=0.7.2"
+    }
+}
