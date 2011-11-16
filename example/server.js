@@ -1,4 +1,4 @@
-var bogart = require('./bogart/lib/bogart'),
+var bogart = require('bogart'),
     DataProvider = require("../lib/index").DataProvider;
 
 
