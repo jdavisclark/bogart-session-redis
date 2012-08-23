@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/jdc0589/bogart-session-redis.png)](http://travis-ci.org/jdc0589/bogart-session-redis)
 Redis provider(s) for the Bogart "Session" JSGI middleware.
 
 ## Example:
