@@ -1,37 +1,36 @@
-var bogart = require('bogart'),
-    DataProvider = require("../lib/index").DataProvider;
+var bogart = require('bogart')
+  , RedisStore = require("../lib/index");
 
-
-var config = function(show, create, update, destroy) {
-  show('/', function(req) {
-    req.session("foo", "bar");
-
-    var session = "Session: <br /><ul>";
-    req.session.keys().forEach(function(key) {
-      session += "<li>"+key+": "+req.session(key)+"</li>";
-    });
-    session += "</ul>";
-
-    return bogart.html(session);
+var router = bogart.router();
+router.get('/', function (req) {
+  var session = "<html><body>Session: <br /><ul>";
+  req.session.keys().forEach(function(key) {
+    session += "<li>"+key+": "+req.session(key)+"</li>";
   });
-};
+  session += "</ul>";
+  session += "<form method='post'><label>Key <input type='text' name='key' /></label>";
+  session += "<label>Value <input type='text' name='value' /></label>"
+  session += "<input type='submit' value='Add to Session' />";
+  session += "</form></body></html>";
 
-var dataProviderConfig = {
-  lifetime: 600,
-  redis: {
+  return bogart.html(session);
+});
+
+router.post('/', function (req) {
+  req.session(req.params.key, req.params.value);
+  return bogart.redirect('/');
+});
+
+var app = bogart.app();
+app.use(bogart.middleware.session({
+  secret: 'my-secret',
+  store: new RedisStore({
+    lifetime: 600,
     port: 6379,
     host: "localhost"
-  }
-};
+  })
+}));
+app.use(bogart.middleware.parseForm());
+app.use(router);
 
-var sessionConfig = {
-  options: {
-    idProvider: {
-      encryptionKey: "330e2e6e-0a94-11e1-9db7-935b9f6cc277"
-    }
-  },
-  dataProvider: new DataProvider(dataProviderConfig)
-};
-
-var app = bogart.middleware.Session(sessionConfig, bogart.router(config));
-bogart.start(app, {port:1337});
+app.start(1337);
