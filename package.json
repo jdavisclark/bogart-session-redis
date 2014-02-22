@@ -12,7 +12,6 @@
       "email": "jdc0589@gmail.com"
     },
     "dependencies": {
-      "hiredis": "=0.1.12",
       "redis": "=0.6.7",
       "q" : "=0.7.2"
     },
